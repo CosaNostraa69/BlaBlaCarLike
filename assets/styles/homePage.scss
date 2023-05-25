@@ -1,0 +1,14 @@
+.heroBanner{
+    background-image: url(/public/images/pont.jpg);
+    background-size: cover;
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h1{
+        color: #fff;
+    }
+}
