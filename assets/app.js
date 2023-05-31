@@ -9,6 +9,8 @@
 import './styles/app.scss';
 import './styles/homePage.scss';
 import './styles/navbar.scss';
+import './styles/register.scss';
+import './styles/login.scss';
 
 
 

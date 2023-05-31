@@ -82,14 +82,17 @@ nav {
   padding: 10px 5px;
   margin: 0 5px;
   border-radius: 5px;
+  text-decoration: none;
   cursor: pointer;
   border: none;
   background-color: orangered;
   color: white;
+  text-align: center;
   transition: background-color 0.3s ease;
 }
 
 .sign-btns a:nth-child(2) {
+  text-align: center;
   background-color: white;
   color: orangered;
   border: 1px solid orangered;
