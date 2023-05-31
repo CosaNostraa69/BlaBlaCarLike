@@ -1,0 +1,46 @@
+<nav>
+
+   
+        <img
+        class="logoImg"
+        src="{{ asset('images/blabla.svg') }}"
+        alt="Logo"
+      />
+
+    <div class="main-navlinks">
+      <button type="button" class="hamburger"  aria-label="Toggle Navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      <div class="navlinks-container">
+        <a class="link" href="{{ path('home_page') }}">Accueil</a>
+        <a class="link" href="{{ path('carList_page') }}"
+          >Liste des annonces</a>          
+          <a class="link" href="{{ path('details_page') }}">Mes trajets</a>
+      </div>
+    </div>
+
+    {% if not app.user %} 
+
+    <div class="nav-authentication">
+      <a href="#" class="user-toggler" aria-label="Sign in page">
+        <img src="{{asset('/images/user.svg')}}" alt="user icon" />
+      </a>
+      <div class="sign-btns">
+        <a href="{{path('app_login')}}" type="button">Se connecter</a>
+        <a href="{{path('app_register')}}" type="button">S'inscrire</a>
+      </div>
+
+      {% else %}
+      <div class="sign-btns">
+        <a href="/logout" type="button">Se deconnecter</a>
+      </div>
+    {% endif %}
+
+      
+    </div>
+    
+  </nav>
+
+  <div class="fix_Header"></div>

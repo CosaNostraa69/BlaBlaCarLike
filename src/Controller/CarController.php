@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CarController extends AbstractController
 {
-    #[Route('/accueil', name: 'home_page')]
+    #[Route('/', name: 'home_page')]
     public function home(): Response
     {
         $pageTitle = 'Accueil';
@@ -38,5 +38,6 @@ class CarController extends AbstractController
             'controller_name' => 'CarController',
             'page_title' => $pageTitle,
         ]);
-    }
+    }   
 }
+    

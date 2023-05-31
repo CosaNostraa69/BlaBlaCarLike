@@ -19,12 +19,15 @@
     {{
       encore_entry_script_tags("hello")
     }}
-    
+    {{
+        encore_entry_script_tags("navbar")
+      }}
+      
 
     {% endblock %}
   </head>
   <body>
- {% include 'Components/header.html.twig'%}
+ {% include 'Components/navbar.html.twig'%}
     {% block body %}{% endblock %}
   </body>
 </html>
