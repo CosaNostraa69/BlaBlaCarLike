@@ -17,8 +17,8 @@ class RideFixtures extends AbstractFixture
             for ($i = 0; $i < 10; $i ++) {
     
                 $ride = new Ride();
-                $ride->setDeparture($this->faker->word());
-                $ride->setDestination($this->faker->word());
+                $ride->setDeparture($this->faker->city());
+                $ride->setDestination($this->faker->city());
                 $ride->setSeats($this->faker->numberBetween(1,4));
                 $ride->setPrice($this->faker->numberBetween(5,38));
                 $ride->setDate($this->faker->DateTimeThisMonth());

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for ride in rides %}
+                <div class="col-md-8 mb-4">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Trajet</h5>
+                            <span class="h2 font-weight-bold mb-0">De {{ ride.departure }} à {{ ride.destination }}</span>
+                            <div class="mt-4">
+                                <strong>Sièges disponibles :</strong> {{ ride.seats }}<br>
+                                <strong>Prix par siège :</strong> {{ ride.price }} €<br>
+                                <strong>Date du trajet :</strong> {{ ride.date|date('d/m/Y') }}<br>
+                                <strong>Trajet créé le :</strong> {{ ride.created|date('d/m/Y') }}
+                            </div>
+                            <a href="{{ path('app_ride_detail', {id: ride.id}) }}" class="btn btn-primary mt-4">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

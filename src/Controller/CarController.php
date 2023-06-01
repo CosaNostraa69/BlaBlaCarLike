@@ -19,16 +19,6 @@ class CarController extends AbstractController
     }
 
 
-    #[Route('/annonce', name: 'carList_page')]
-    public function annonce(): Response
-    {
-        $pageTitle = 'Annonces';
-        return $this->render('car/carList.html.twig', [
-            'controller_name' => 'CarController',
-            'page_title' => $pageTitle,
-        ]);
-    }  
-    
     
     #[Route('/profil', name: 'profil_page')]
     public function details(): Response

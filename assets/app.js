@@ -11,6 +11,8 @@ import './styles/homePage.scss';
 import './styles/navbar.scss';
 import './styles/register.scss';
 import './styles/login.scss';
+import './styles/ride.scss';
+
 
 
 

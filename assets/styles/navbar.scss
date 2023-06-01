@@ -4,10 +4,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+ 
 }
 
 body {
-  font-family: Montserrat, Helvetica, sans-serif;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   background: #f4f4f4;
 }
 
@@ -19,6 +20,13 @@ nav {
   padding: 15px 25px;
   background: #fafafa;
   box-shadow: inset 0px -1px 0px #c5c5c6;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+
 }
 .logoImg {
     width: 30vw;
@@ -52,8 +60,9 @@ nav {
   font-size: 16px;
   font-weight: 500;
   text-decoration: none;
-  color: #414141;
+  color: #000000;
   position: relative;
+  transition: all 0.3s ease;
 }
 .navlinks-container a::after {
   content: "";
