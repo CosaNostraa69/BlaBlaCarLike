@@ -30,11 +30,11 @@ class CarController extends AbstractController
     }  
     
     
-    #[Route('/details', name: 'details_page')]
+    #[Route('/profil', name: 'profil_page')]
     public function details(): Response
     {
-        $pageTitle = 'Détails';
-        return $this->render('car/details.html.twig', [
+        $pageTitle = 'Profil';
+        return $this->render('car/profil.html.twig', [
             'controller_name' => 'CarController',
             'page_title' => $pageTitle,
         ]);
