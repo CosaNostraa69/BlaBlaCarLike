@@ -21,19 +21,23 @@ class Rule
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'rule', targetEntity: User::class)]
-    private Collection $author;
+    #[ORM\ManyToOne(inversedBy: 'rules')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $author = null;
 
     #[ORM\ManyToMany(targetEntity: Ride::class, mappedBy: 'rules')]
     private Collection $rides;
 
-    public function __construct()
+    public function __toString()
     {
-        $this->author = new ArrayCollection();
-        $this->rides = new ArrayCollection();
+        // Or change the property that you want to show in the select.
+        return $this->name . ': ' . $this->description;
     }
 
-
+    public function __construct()
+    {
+        $this->rides = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -64,32 +68,14 @@ class Rule
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getAuthor(): Collection
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function addAuthor(User $author): self
+    public function setAuthor(?User $author): self
     {
-        if (!$this->author->contains($author)) {
-            $this->author->add($author);
-            $author->setRule($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAuthor(User $author): self
-    {
-        if ($this->author->removeElement($author)) {
-            // set the owning side to null (unless already changed)
-            if ($author->getRule() === $this) {
-                $author->setRule(null);
-            }
-        }
+        $this->author = $author;
 
         return $this;
     }
@@ -120,8 +106,5 @@ class Rule
 
         return $this;
     }
-
-
-
 
 }

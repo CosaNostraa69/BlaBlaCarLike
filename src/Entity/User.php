@@ -5,13 +5,12 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use phpDocumentor\Reflection\Types\Void_;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -22,7 +21,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
- 
+    #[ORM\Column]   
+    private array $roles = [];
 
     /**
      * @var string The hashed password
@@ -30,35 +30,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column]     
-    private array $roles = [];
-
     #[ORM\Column(length: 255)]
     private ?string $first_name = null;
 
     #[ORM\Column(length: 255)]
     private ?string $last_name = null;
 
-    #[ORM\Column(length:30)]
+    #[ORM\Column(length: 30)]
     private ?string $phone = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $created = null;
-
-    #[ORM\ManyToOne(inversedBy: 'driver')]
-    private ?Ride $ride = null;
-
-    #[ORM\ManyToOne(inversedBy: 'author')]
-    private ?Rule $rule = null;
-
-    #[ORM\ManyToOne(inversedBy: 'driver')]
-    private ?Ride $rides = null;
-
-    #[ORM\ManyToOne(inversedBy: 'passenger')]
-    private ?Reservation $reservation = null;
-
-    #[ORM\ManyToOne(inversedBy: 'owner')]
-    private ?Car $car = null;
+    
 
     public function getId(): ?int
     {
@@ -90,7 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
+   public function getRoles(): array
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
@@ -129,8 +112,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-
-
 
     public function getFirstName(): ?string
     {
@@ -179,70 +160,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
     #[ORM\PrePersist]
     public function setCreatedValue(): void
     {
         $this->created = new \DateTime();
     }
 
-    public function getRide(): ?Ride
-    {
-        return $this->ride;
-    }
-
-    public function setRide(?Ride $ride): self
-    {
-        $this->ride = $ride;
-
-        return $this;
-    }
-
-    public function getRule(): ?Rule
-    {
-        return $this->rule;
-    }
-
-    public function setRule(?Rule $rule): self
-    {
-        $this->rule = $rule;
-
-        return $this;
-    }
-
-    public function getRides(): ?Ride
-    {
-        return $this->rides;
-    }
-
-    public function setRides(?Ride $rides): self
-    {
-        $this->rides = $rides;
-
-        return $this;
-    }
-
-    public function getReservation(): ?Reservation
-    {
-        return $this->reservation;
-    }
-
-    public function setReservation(?Reservation $reservation): self
-    {
-        $this->reservation = $reservation;
-
-        return $this;
-    }
-
-    public function getCar(): ?Car
-    {
-        return $this->car;
-    }
-
-    public function setCar(?Car $car): self
-    {
-        $this->car = $car;
-
-        return $this;
-    }
     
 }

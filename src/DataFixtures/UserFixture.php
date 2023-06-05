@@ -11,23 +11,20 @@ class UserFixture extends AbstractFixture
 {
     public function load(ObjectManager $manager): void
     {
-    
-        
-            for ($i = 0; $i < 10; $i ++) {
-    
-                $user = new User();
-                $user->setEmail($this->faker->email());
-                $user->setFirstName($this->faker->firstName());
-                $user->setLastName($this->faker->lastName());
-                $user->setPassword($this->faker->password());
-                $user->setPhone($this->faker->phoneNumber());
-                $user->setCreated(new DateTime());
+        for ($i = 0; $i < 10; $i ++) {
+            $user = new User();
+            $user->setEmail($this->faker->email());
+            $user->setFirstName($this->faker->firstName());
+            $user->setLastName($this->faker->lastName());
+            $user->setPassword($this->faker->password());
+            $user->setPhone($this->faker->phoneNumber());
+            $user->setCreated(new DateTime());
 
-    
-                $manager->persist($user);
-                $this->setReference('user' . $i, $user);
-            }
-            $manager->flush();
-    
-}
+
+
+            $manager->persist($user);
+            $this->addReference('user_' . $i, $user);
+        }
+        $manager->flush();
+    }
 }

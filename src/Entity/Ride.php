@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: RideRepository::class)]
 class Ride
@@ -29,28 +28,28 @@ class Ride
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $created = null;
 
+    #[ORM\OneToMany(mappedBy: 'ride', targetEntity: Reservation::class)]
+    private Collection $reservations;
+
+    #[ORM\ManyToOne(inversedBy: 'rides')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $driver = null;
+
     #[ORM\ManyToMany(targetEntity: Rule::class, inversedBy: 'rides')]
     private Collection $rules;
-
-    #[ORM\OneToMany(mappedBy: 'rides', targetEntity: User::class)]
-    private Collection $driver;
-
-    #[ORM\ManyToOne(inversedBy: 'ride')]
-    private ?Reservation $reservation = null;
 
     public function __construct()
     {
         $this->rules = new ArrayCollection();
-        $this->driver = new ArrayCollection();
     }
 
-
+    #[ORM\ManyToMany(targetEntity: Rule::class, inversedBy: 'rides')]
 
     public function getId(): ?int
     {
@@ -130,6 +129,48 @@ class Ride
     }
 
     /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setRide($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getRide() === $this) {
+                $reservation->setRide(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDriver(): ?User
+    {
+        return $this->driver;
+    }
+
+    public function setDriver(?User $driver): self
+    {
+        $this->driver = $driver;
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Rule>
      */
     public function getRules(): Collection
@@ -152,48 +193,5 @@ class Ride
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getDriver(): Collection
-    {
-        return $this->driver;
-    }
-
-    public function addDriver(User $driver): self
-    {
-        if (!$this->driver->contains($driver)) {
-            $this->driver->add($driver);
-            $driver->setRides($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDriver(User $driver): self
-    {
-        if ($this->driver->removeElement($driver)) {
-            // set the owning side to null (unless already changed)
-            if ($driver->getRides() === $this) {
-                $driver->setRides(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getReservation(): ?Reservation
-    {
-        return $this->reservation;
-    }
-
-    public function setReservation(?Reservation $reservation): self
-    {
-        $this->reservation = $reservation;
-
-        return $this;
-    }
-
 
 }

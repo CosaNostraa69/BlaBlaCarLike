@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %} {% block title %}Profil de {{ user.username }}{%
+endblock %} {% block body %}
+<h1>Profil de {{ user.username }}</h1>
+
+<h2>Informations personnelles</h2>
+<p>Nom: {{ user.lastname }}</p>
+<p>Prénom: {{ user.firstname }}</p>
+<p>Email: {{ user.email }}</p>
+
+<h2>Mes voitures</h2>
+{% for car in cars %}
+<p>
+  Marque: {{ car.brand }}<br />
+  Modèle: {{ car.model }}<br />
+  Nombre de places: {{ car.seats }}
+</p>
+{% else %}
+<p>Vous n'avez pas de voitures enregistrées.</p>
+{% endfor %}
+
+<h2>Mes trajets</h2>
+{% for ride in rides %}
+<p>
+  Départ: {{ ride.departure }}<br />
+  Arrivée: {{ ride.arrival }}<br />
+  Date: {{ ride.date|date('d/m/Y') }}
+</p>
+{% else %}
+<p>Vous n'avez pas de trajets enregistrés.</p>
+{% endfor %} {% endblock %}

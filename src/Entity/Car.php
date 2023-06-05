@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CarRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,13 +26,9 @@ class Car
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $created = null;
 
-    #[ORM\OneToMany(mappedBy: 'car', targetEntity: User::class)]
-    private Collection $owner;
-
-    public function __construct()
-    {
-        $this->owner = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'cars')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
 
     public function getId(): ?int
     {
@@ -89,32 +83,14 @@ class Car
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getOwner(): Collection
+    public function getOwner(): ?User
     {
         return $this->owner;
     }
 
-    public function addOwner(User $owner): self
+    public function setOwner(?User $owner): self
     {
-        if (!$this->owner->contains($owner)) {
-            $this->owner->add($owner);
-            $owner->setCar($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOwner(User $owner): self
-    {
-        if ($this->owner->removeElement($owner)) {
-            // set the owning side to null (unless already changed)
-            if ($owner->getCar() === $this) {
-                $owner->setCar(null);
-            }
-        }
+        $this->owner = $owner; 
 
         return $this;
     }
