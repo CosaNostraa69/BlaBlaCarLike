@@ -1,30 +1,96 @@
-{% extends 'base.html.twig' %} {% block title %}Profil de {{ user.username }}{%
-endblock %} {% block body %}
-<h1>Profil de {{ user.username }}</h1>
+{% extends 'base.html.twig' %}
+{% block title %}Profil{% endblock %}
 
-<h2>Informations personnelles</h2>
-<p>Nom: {{ user.lastname }}</p>
-<p>Prénom: {{ user.firstname }}</p>
-<p>Email: {{ user.email }}</p>
+{% block body %}
+<div class="container pt-5">
+  <h1 class="mb-5">Mon profil</h1>
 
-<h2>Mes voitures</h2>
-{% for car in cars %}
-<p>
-  Marque: {{ car.brand }}<br />
-  Modèle: {{ car.model }}<br />
-  Nombre de places: {{ car.seats }}
-</p>
-{% else %}
-<p>Vous n'avez pas de voitures enregistrées.</p>
-{% endfor %}
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Mes infos</h2>
+          <a href={{path('app_profile_edit',{'id': user.id}) }} class="btn btn-primary mb-4"><i class="fa fa-edit"></i> Modifier</a>
+          {% if user is defined %}
+          <p><strong>Nom</strong>: {{ user.firstName }}</p>
+          <p><strong>Prénom</strong>: {{ user.lastName }}</p>
+          <p><strong>Téléphone</strong>: {{ user.phone }}</p>
+          <p><strong>Email</strong>: {{ user.email }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
 
-<h2>Mes trajets</h2>
-{% for ride in rides %}
-<p>
-  Départ: {{ ride.departure }}<br />
-  Arrivée: {{ ride.arrival }}<br />
-  Date: {{ ride.date|date('d/m/Y') }}
-</p>
-{% else %}
-<p>Vous n'avez pas de trajets enregistrés.</p>
-{% endfor %} {% endblock %}
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Mes voitures</h2>
+          <a class="btn btn-primary mb-4" href={{ path('add_profil_car') }}><i class="fa fa-plus"></i> Ajouter une
+            voiture</a>
+
+          {% if cars is defined %}
+          {% for car in cars %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ car.brand }} - {{ car.model }}</h5>
+              <p class="card-text">{{ car.seats }} places</p>
+
+              {# Edit Form #}
+              <div id="editCarForm_{{ car.id }}" style="display: none;">
+                {{ form_start(editCarForms[car.id]) }}
+                {{ form_widget(editCarForms[car.id]) }}
+                <button class="btn btn-warning"><i class="fa fa-edit"></i> Save</button>
+                {{ form_end(editCarForms[car.id]) }}
+              </div>
+
+              {# Edit Button #}
+              <a href="{{ path('edit_profil_car', {'id': car.id}) }}" class="btn btn-warning"><i
+                  class="fa fa-edit"></i></a>
+
+
+              {# Delete Button #}
+              <form action="{{ path('delete_profil_car', {'id': car.id}) }}" method="post">
+                <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Mes trajets</h2>
+          <a class="btn btn-primary mb-4" href={{ path('add_profil_ride') }}><i class="fa fa-plus"></i> Ajouter un
+            trajet</a>
+
+          {% if rides is defined %}
+          {% for ride in rides %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ ride.departure }}</h5>
+              <p>{{ ride.destination }}</p>
+              <p>Date de création : {{ ride.date|date("d/m/Y")}}</p>
+
+              {# Edit Button #}
+              <a class="btn btn-warning" href="{{ path('edit_profil_ride', {'id': ride.id}) }}"><i
+                  class="fa fa-edit"></i></a>
+
+              {# Delete Button #}
+              <form action="{{ path('delete_profil_ride', {'id': ride.id}) }}" method="post" style="display: inline;">
+                <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+              </form>
+            </div>
+          </div>
+          {% else %}
+          <p>Aucun trajet trouvé.</p>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un trajet{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Ajouter un trajet</h1>
+
+        {{ form_start(addRide) }}
+            {{ form_widget(addRide) }}
+
+            <button class="btn btn-primary mt-3" type="submit">
+                <i class="fas fa-plus-circle"></i> Ajouter
+            </button>
+        {{ form_end(addRide) }}
+    </div>
+{% endblock %}

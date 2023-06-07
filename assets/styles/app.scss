@@ -7,7 +7,35 @@
     
 }
 body {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255) !important;
 }
 
 
+.card {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease-in-out;
+    
+    .card:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .card .card-body {
+      position: relative;
+    }
+    
+    .card .card-body h2.card-title {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+    }
+  }
+  
+  
+  
+  .btn-warning {
+    background-color: #ffa500 ;
+    border-color: #ffa500 ;
+  }
+  
+  .btn-warning:hover {
+    background-color: #ff8c00;
+    border-color: #ff8c00;
+  }
+  

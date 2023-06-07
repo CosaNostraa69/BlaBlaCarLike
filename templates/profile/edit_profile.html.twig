@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Edit Profile</h1>
+
+    {{ form_start(editProfile) }}
+
+        {{ form_row(editProfile.first_name) }}  
+        {{ form_row(editProfile.last_name) }}   
+
+        {{ form_row(editProfile.phone) }}
+
+        <button class="btn">{{ button_label|default('Save') }}</button>
+        {{ form_end(editProfile) }}
+{% endblock %}
+
