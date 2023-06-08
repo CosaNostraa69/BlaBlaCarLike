@@ -27,35 +27,40 @@
           <h2 class="card-title">Mes voitures</h2>
           <a class="btn btn-primary mb-4" href={{ path('add_profil_car') }}><i class="fa fa-plus"></i> Ajouter une
             voiture</a>
-
-          {% if cars is defined %}
-          {% for car in cars %}
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ car.brand }} - {{ car.model }}</h5>
-              <p class="card-text">{{ car.seats }} places</p>
-
-              {# Edit Form #}
-              <div id="editCarForm_{{ car.id }}" style="display: none;">
-                {{ form_start(editCarForms[car.id]) }}
-                {{ form_widget(editCarForms[car.id]) }}
-                <button class="btn btn-warning"><i class="fa fa-edit"></i> Save</button>
-                {{ form_end(editCarForms[car.id]) }}
-              </div>
-
-              {# Edit Button #}
-              <a href="{{ path('edit_profil_car', {'id': car.id}) }}" class="btn btn-warning"><i
-                  class="fa fa-edit"></i></a>
-
-
-              {# Delete Button #}
-              <form action="{{ path('delete_profil_car', {'id': car.id}) }}" method="post">
-                <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
-              </form>
-            </div>
-          </div>
-          {% endfor %}
-          {% endif %}
+            {% if cars is defined %}
+            {% for car in cars %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.brand }} - {{ car.model }}</h5>
+                        <p class="card-text">{{ car.seats }} places</p>
+        
+                        {# Edit Form #}
+                        <div id="editCarForm_{{ car.id }}" style="display: none;">
+                            {{ form_start(editCarForms[car.id]) }}
+                            {{ form_widget(editCarForms[car.id]) }}
+                            <button class="btn btn-warning"><i class="fa fa-edit"></i> Save</button>
+                            {{ form_end(editCarForms[car.id]) }}
+                        </div>
+        
+                        <div class="d-inline-block"> {# Opening div for inline display #}
+                            {# Edit Button #}
+                            <a href="{{ path('edit_profil_car', {'id': car.id}) }}" class="btn btn-warning d-inline-block">
+                                <img width="16" height="16" src="https://img.icons8.com/windows/32/000000/edit--v1.png" alt="edit icon"/>
+                            </a>
+                        
+                            {# Delete Button #}
+                            <form action="{{ path('delete_profil_car', {'id': car.id}) }}" method="post" class="d-inline-block">
+                                <button class="btn btn-danger">
+                                    <img width="16" height="16" src="https://img.icons8.com/windows/32/trash.png" alt="trash icon"/>
+                                </button>
+                            </form>
+                        </div> 
+                        
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
         </div>
       </div>
     </div>
@@ -76,13 +81,18 @@
               <p>Date de création : {{ ride.date|date("d/m/Y")}}</p>
 
               {# Edit Button #}
-              <a class="btn btn-warning" href="{{ path('edit_profil_ride', {'id': ride.id}) }}"><i
-                  class="fa fa-edit"></i></a>
+              <a href="{{ path('edit_profil_ride', {'id': ride.id}) }}" class="btn btn-warning">
+                <img width="16" height="16" src="https://img.icons8.com/windows/32/000000/edit--v1.png" alt="edit icon"/>
+            </a>
+            
 
               {# Delete Button #}
               <form action="{{ path('delete_profil_ride', {'id': ride.id}) }}" method="post" style="display: inline;">
-                <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
-              </form>
+                <button class="btn btn-danger">
+                    <img width="16" height="16" src="https://img.icons8.com/windows/32/trash.png" alt="trash icon"/>
+                </button>
+            </form>
+            
             </div>
           </div>
           {% else %}

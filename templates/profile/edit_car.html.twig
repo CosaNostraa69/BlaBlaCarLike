@@ -3,14 +3,30 @@
 {% block title %}Modifier une voiture{% endblock %}
 
 {% block body %}
-<div class="container pt-5">
-  <h1 class="mb-5">Modifier une voiture</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Modifier une voiture</h1>
 
-  {{ form_start(editCar) }}
-  {{ form_widget(editCar) }}
-  <button class="btn btn-primary">Enregistrer</button>
-  {{ form_end(editCar) }}
+        {{ form_start(editCar, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
 
-  <a href="{{ path('app_profile') }}" class="btn btn-secondary mt-3">Retour</a>
-</div>
+        {% for field in editCar %}
+            <div class="mb-3">
+                {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        {% endfor %}
+
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary btn-lg mt-3" type="submit">
+                <i class="fas fa-save"></i> Enregistrer
+            </button>
+        </div>
+
+        {{ form_end(editCar) }}
+        
+        <div class="d-grid gap-2 mt-3">
+            <a href="{{ path('app_profile') }}" class="btn btn-secondary btn-lg">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+        </div>
+    </div>
 {% endblock %}

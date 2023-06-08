@@ -3,11 +3,22 @@
 {% block title %}Ajouter une voiture{% endblock %}
 
 {% block body %}
-    <h1>Ajouter une voiture</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Ajouter une voiture</h1>
 
-    {{ form_start(addCar) }}
-        {{ form_widget(addCar) }}
+        {{ form_start(addCar, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
 
-        <button type="submit" class="btn btn-success">Ajouter</button>
-    {{ form_end(addCar) }}
+        {% for field in addCar %}
+            <div class="mb-3">
+                {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        {% endfor %}
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success btn-lg">Ajouter</button>
+        </div>
+
+        {{ form_end(addCar) }}
+    </div>
 {% endblock %}

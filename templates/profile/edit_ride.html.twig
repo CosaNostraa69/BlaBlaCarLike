@@ -3,15 +3,24 @@
 {% block title %}Modifier un trajet{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Modifier un trajet</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Modifier un trajet</h1>
 
-        {{ form_start(editRide) }}
-            {{ form_widget(editRide) }}
+        {{ form_start(editRide, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
 
-            <button class="btn btn-primary mt-3" type="submit">
+        {% for field in editRide %}
+            <div class="mb-3">
+                {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        {% endfor %}
+
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary btn-lg mt-3" type="submit">
                 <i class="fas fa-edit"></i> Modifier
             </button>
+        </div>
+
         {{ form_end(editRide) }}
     </div>
 {% endblock %}
